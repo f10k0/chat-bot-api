@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 Express Чат-Бот</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>🤖 Express Чат-Бот</h1>
+            <p>RESTful API для общения с ботом</p>
+        </div>
+        
+        <!-- Блок ввода имени -->
+        <div class="user-name-input" id="nameInputContainer">
+            <h3>Введите ваше имя:</h3>
+            <input 
+                type="text" 
+                id="userNameInput" 
+                placeholder="Ваше имя..."
+                onkeypress="if(event.key === 'Enter') setUserName()"
+            >
+            <button onclick="setUserName()">Начать общение</button>
+            
+            <div class="api-preview">
+                <p><strong>API доступно по адресу:</strong></p>
+                <code>http://localhost:3000/api/chat</code>
+                <div class="api-methods">
+                    <span class="method get">GET</span>
+                    <span class="method post">POST</span>
+                    <span class="method put">PUT</span>
+                    <span class="method delete">DELETE</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Основной интерфейс чата -->
+        <div class="chat-main" id="chatMain" style="display: none;">
+            <div class="user-info">
+                <span>Вы: <strong id="currentUserName">Гость</strong></span>
+                <div class="user-actions">
+                    <button onclick="showApiInfo()" class="api-btn">API Инфо</button>
+                    <button onclick="changeUserName()">Сменить имя</button>
+                </div>
+            </div>
+            
+            <!-- Контейнер сообщений -->
+            <div class="chat-messages" id="messagesContainer">
+                <!-- Сообщения будут здесь -->
+            </div>
+            
+            <!-- Блок ввода сообщения -->
+            <div class="chat-input">
+                <input 
+                    type="text" 
+                    id="messageInput" 
+                    placeholder="Введите сообщение..."
+                    onkeypress="if(event.key === 'Enter') sendMessage()"
+                >
+                <button onclick="sendMessage()">Отправить</button>
+            </div>
+            
+            <!-- Блок информации -->
+            <div class="chat-info">
+                <div class="api-links">
+                    <a href="/api/chat" target="_blank" class="api-link">📡 API (JSON)</a>
+                    <a href="/api/chat/bot/response?message=Привет" target="_blank" class="api-link">🤖 Тест API</a>
+                </div>
+                <div class="buttons">
+                    <button onclick="loadMessages()">🔄 Обновить</button>
+                    <button onclick="clearChat()" class="danger">🗑️ Очистить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно с информацией об API -->
+    <div class="modal-overlay" id="apiModal" style="display: none;">
+        <div class="modal-content">
+            <h2>📚 REST API Документация</h2>
+            <div class="endpoint">
+                <h3><span class="method get">GET</span> /api/chat</h3>
+                <p>Получить все сообщения</p>
+                <code>fetch('/api/chat').then(r => r.json())</code>
+            </div>
+            
+            <div class="endpoint">
+                <h3><span class="method get">GET</span> /api/chat/:id</h3>
+                <p>Получить сообщение по ID</p>
+                <code>fetch('/api/chat/1')</code>
+            </div>
+            
+            <div class="endpoint">
+                <h3><span class="method post">POST</span> /api/chat</h3>
+                <p>Отправить новое сообщение</p>
+                <code>fetch('/api/chat', {
+  method: 'POST',
+  headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify({text: "Привет", user: "Имя"})
+})</code>
+            </div>
+            
+            <div class="endpoint">
+                <h3><span class="method get">GET</span> /api/chat/bot/response?message=текст</h3>
+                <p>Получить ответ бота</p>
+                <code>fetch('/api/chat/bot/response?message=Привет&userName=Иван')</code>
+            </div>
+            
+            <div class="endpoint">
+                <h3><span class="method put">PUT</span> /api/chat/:id</h3>
+                <p>Обновить сообщение</p>
+                <code>fetch('/api/chat/1', {
+  method: 'PUT',
+  headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify({text: "Новый текст"})
+})</code>
+            </div>
+            
+            <div class="endpoint">
+                <h3><span class="method delete">DELETE</span> /api/chat/:id</h3>
+                <p>Удалить сообщение</p>
+                <code>fetch('/api/chat/1', {method: 'DELETE'})</code>
+            </div>
+            
+            <button onclick="hideApiInfo()" class="close-btn">Закрыть</button>
+        </div>
+    </div>
+
+    <script src="chat.js"></script>
+</body>
+</html>
