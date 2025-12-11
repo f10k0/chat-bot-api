@@ -16,7 +16,6 @@ const saveMessages = async (messages) => {
     await fs.writeFile(dataPath, JSON.stringify(messages, null, 2));
 };
 
-// Функция для получения следующего ID
 const getNextId = (messages) => {
     if (messages.length === 0) return 1;
     const maxId = Math.max(...messages.map(m => m.id));
@@ -98,8 +97,7 @@ const generateBotResponse = (userMessage, userName) => {
     if (message.includes('помощь')) {
         return `Спроси: привет, как дела, время, дата, что такое express.`;
     }
-    
-    // Простые ответы для всего остального
+
     const simpleAnswers = [
         `Не понял, ${userName}.`,
         `Попробуй спросить по-другому.`,
@@ -145,8 +143,7 @@ const chatController = {
             }
             
             const messages = await loadMessages();
-            
-            // Сообщение пользователя
+
             const userMessage = {
                 id: getNextId(messages),
                 text: text.trim(),
@@ -157,11 +154,9 @@ const chatController = {
             
             messages.push(userMessage);
             await saveMessages(messages);
-            
-            // Отправляем ответ сразу
+
             res.status(201).json(userMessage);
-            
-            // Ответ бота через секунду
+
             setTimeout(async () => {
                 const updatedMessages = await loadMessages(); // Загружаем заново
                 const botResponse = generateBotResponse(text, user);
@@ -262,5 +257,6 @@ const chatController = {
         }
     }
 };
+
 
 module.exports = chatController;
