@@ -44,7 +44,6 @@ body {
     font-size: 1rem;
 }
 
-/* Блок ввода имени */
 .user-name-input {
     padding: 30px;
     text-align: center;
@@ -89,7 +88,6 @@ body {
     transform: scale(1.05);
 }
 
-/* Основной интерфейс чата */
 .chat-main {
     flex: 1;
     display: flex;
@@ -127,7 +125,6 @@ body {
     opacity: 0.9;
 }
 
-/* Контейнер сообщений с прокруткой */
 .chat-messages {
     flex: 1; /* Занимает всё доступное пространство */
     padding: 20px;
@@ -138,7 +135,6 @@ body {
     min-height: 0; /* Важно для прокрутки */
 }
 
-/* Стили для прокрутки */
 .chat-messages::-webkit-scrollbar {
     width: 8px;
 }
@@ -221,7 +217,6 @@ body {
     margin-top: 5px;
 }
 
-/* Блок ввода сообщения */
 .chat-input {
     padding: 20px;
     background: white;
@@ -540,4 +535,5 @@ body {
 .close-btn:hover {
     background: #c82333;
     transform: scale(1.05);
+
 }
